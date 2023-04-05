@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+        app: auth
+  template:
+      metadata:
+        labels:
+          app: auth
+      spec:
+        containers:
+          - name: auth
+            image: wenjunzeng9966/auth:latest
+---
+apiVersion: v1
+kind: Service
+#default type is ClusterIP
+metadata:
+  name: auth-srv
+spec:
+  selector:
+      app: auth
+  ports:
+      - name: auth
+        protocol: TCP
+        port: 3000
+        targetPort: 3000
+
+
